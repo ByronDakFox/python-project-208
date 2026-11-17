@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1 class="my-4">Usuarios</h1>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre de usuario</th>
+        <th>Nombre completo</th>
+        <th>Fecha de creación</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for u in user_list %}
+        <tr>
+          <td>{{ u.pk }}</td>
+          <td>{{ u.username }}</td>
+          <td>{{ u.get_full_name }}</td>
+          <td>{{ u.date_joined|date:"d/m/Y H:i" }}</td>
+          <td>
+            <a href="{% url 'users_update' u.pk %}">Editar</a>
+            <a href="{% url 'users_delete' u.pk %}">Eliminar</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
