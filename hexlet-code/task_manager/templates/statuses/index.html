@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1 class="my-4">Estados</h1>
+  <a class="btn btn-primary mb-3" href="{% url 'statuses_create' %}">
+    Crear estado
+  </a>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Fecha de creación</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for status in status_list %}
+        <tr>
+          <td>{{ status.pk }}</td>
+          <td>{{ status.name }}</td>
+          <td>{{ status.created_at|date:"d/m/Y H:i" }}</td>
+          <td>
+            <a href="{% url 'statuses_update' status.pk %}">Editar</a>
+            <a href="{% url 'statuses_delete' status.pk %}">Eliminar</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
