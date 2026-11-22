@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1 class="my-4">Vista de tarea</h1>
+  <div class="card">
+    <div class="card-header">
+      <h2>{{ task.name }}</h2>
+    </div>
+    <div class="card-body">
+      <p>{{ task.description }}</p>
+      <hr>
+      <table class="table">
+        <tbody>
+          <tr><th>Autor</th><td>{{ task.author.get_full_name }}</td></tr>
+          <tr>
+            <th>Ejecutor</th>
+            <td>{{ task.executor.get_full_name|default:"" }}</td>
+          </tr>
+          <tr><th>Estado</th><td>{{ task.status.name }}</td></tr>
+          <tr>
+            <th>Fecha de creación</th>
+            <td>{{ task.created_at|date:"d/m/Y H:i" }}</td>
+          </tr>
+          <tr>
+            <th>Etiquetas</th>
+            <td>
+              <ul class="mb-0">
+                {% for label in task.labels.all %}
+                  <li>{{ label.name }}</li>
+                {% endfor %}
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <a href="{% url 'tasks_update' task.pk %}">Editar</a>
+      <a href="{% url 'tasks_delete' task.pk %}">Eliminar</a>
+    </div>
+  </div>
+{% endblock %}

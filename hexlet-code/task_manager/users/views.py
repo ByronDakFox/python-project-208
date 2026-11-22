@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db.models import ProtectedError
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
@@ -65,3 +66,13 @@ class UserDeleteView(
     template_name = 'users/delete.html'
     success_url = reverse_lazy('users_index')
     success_message = 'El usuario se eliminó correctamente.'
+
+    def form_valid(self, form):
+        try:
+            return super().form_valid(form)
+        except ProtectedError:
+            messages.error(
+                self.request,
+                'No se puede eliminar el usuario porque está en uso.',
+            )
+            return redirect('users_index')
