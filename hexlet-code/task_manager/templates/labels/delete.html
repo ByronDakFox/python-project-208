@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1 class="my-4">Eliminar etiqueta</h1>
+  <form method="post">
+    {% csrf_token %}
+    <p>¿Seguro que quieres eliminar la etiqueta «{{ object.name }}»?</p>
+    <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+  </form>
+{% endblock %}
