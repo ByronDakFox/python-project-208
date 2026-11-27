@@ -1,7 +1,6 @@
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
@@ -20,7 +19,7 @@ class LabelCreateView(AuthRequiredMixin, SuccessMessageMixin, CreateView):
     form_class = LabelForm
     template_name = 'labels/form.html'
     success_url = reverse_lazy('labels_index')
-    success_message = 'La etiqueta se creó correctamente.'
+    success_message = 'Etiqueta creada con éxito'
     extra_context = {'title': 'Crear etiqueta', 'button_text': 'Crear'}
 
 
@@ -29,15 +28,15 @@ class LabelUpdateView(AuthRequiredMixin, SuccessMessageMixin, UpdateView):
     form_class = LabelForm
     template_name = 'labels/form.html'
     success_url = reverse_lazy('labels_index')
-    success_message = 'La etiqueta se modificó correctamente.'
-    extra_context = {'title': 'Cambiar etiqueta', 'button_text': 'Cambiar'}
+    success_message = 'Etiqueta modificada con éxito'
+    extra_context = {'title': 'Cambiar etiqueta', 'button_text': 'Editar'}
 
 
 class LabelDeleteView(AuthRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Label
     template_name = 'labels/delete.html'
     success_url = reverse_lazy('labels_index')
-    success_message = 'La etiqueta se eliminó correctamente.'
+    success_message = 'Etiqueta eliminada con éxito'
 
     def form_valid(self, form):
         if self.object.tasks.exists():

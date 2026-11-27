@@ -1,9 +1,7 @@
-
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView, DeleteView, DetailView, UpdateView,
@@ -46,7 +44,7 @@ class TaskCreateView(AuthRequiredMixin, SuccessMessageMixin, CreateView):
     form_class = TaskForm
     template_name = 'tasks/form.html'
     success_url = reverse_lazy('tasks_index')
-    success_message = 'La tarea se creó correctamente.'
+    success_message = 'Tarea creada con éxito'
     extra_context = {'title': 'Crear tarea', 'button_text': 'Crear'}
 
     def form_valid(self, form):
@@ -59,8 +57,8 @@ class TaskUpdateView(AuthRequiredMixin, SuccessMessageMixin, UpdateView):
     form_class = TaskForm
     template_name = 'tasks/form.html'
     success_url = reverse_lazy('tasks_index')
-    success_message = 'La tarea se modificó correctamente.'
-    extra_context = {'title': 'Cambiar tarea', 'button_text': 'Cambiar'}
+    success_message = 'Tarea modificada con éxito'
+    extra_context = {'title': 'Cambiar tarea', 'button_text': 'Editar'}
 
 
 class TaskDeleteView(
@@ -69,4 +67,4 @@ class TaskDeleteView(
     model = Task
     template_name = 'tasks/delete.html'
     success_url = reverse_lazy('tasks_index')
-    success_message = 'La tarea se eliminó correctamente.'
+    success_message = 'Tarea eliminada con éxito'

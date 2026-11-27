@@ -52,10 +52,10 @@ class UserUpdateView(
     form_class = UserForm
     template_name = 'users/form.html'
     success_url = reverse_lazy('users_index')
-    success_message = 'El usuario se modificó correctamente.'
+    success_message = 'Usuario modificado con éxito'
     extra_context = {
         'title': 'Cambiar usuario',
-        'button_text': 'Cambiar',
+        'button_text': 'Editar',
     }
 
 
@@ -65,7 +65,7 @@ class UserDeleteView(
     model = User
     template_name = 'users/delete.html'
     success_url = reverse_lazy('users_index')
-    success_message = 'El usuario se eliminó correctamente.'
+    success_message = 'Usuario eliminado con éxito'
 
     def form_valid(self, form):
         try:
