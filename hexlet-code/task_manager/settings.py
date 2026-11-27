@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 
 import dj_database_url
+import sentry_sdk
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_bootstrap5',
+    'django_filters',
     'task_manager.users',
     'task_manager.statuses',
     'task_manager.labels',
@@ -148,3 +150,19 @@ MAILERS = {
 RENDER_HOST = os.getenv('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_HOST:
     CSRF_TRUSTED_ORIGINS = [f'https://{RENDER_HOST}']
+
+# Seguimiento de errores (Bugsink / Sentry)
+# Solo se activa si existe la variable SENTRY_DSN (en Render, no en local).
+SENTRY_DSN = "https://6d52a145b20645a297e384786e25b0f0@codexby.bugsink.com/1"
+#SENTRY_DSN = os.getenv('SENTRY_DSN')
+if SENTRY_DSN:
+    sentry_sdk.init(
+        SENTRY_DSN,
+        environment='production',
+        data_collection={},
+        max_request_body_size='always',
+        # Don't event types which are not supported by Bugsink:
+        traces_sample_rate=0,
+        send_client_reports=False,
+        auto_session_tracking=False,
+    )

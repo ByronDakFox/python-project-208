@@ -1,3 +1,4 @@
+
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
@@ -5,10 +6,12 @@ from django.shortcuts import redirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import (
-    CreateView, DeleteView, DetailView, ListView, UpdateView,
+    CreateView, DeleteView, DetailView, UpdateView,
 )
+from django_filters.views import FilterView
 
 from task_manager.mixins import AuthRequiredMixin
+from task_manager.tasks.filters import TaskFilter
 from task_manager.tasks.forms import TaskForm
 from task_manager.tasks.models import Task
 
@@ -27,12 +30,10 @@ class TaskAuthorMixin(UserPassesTestMixin):
         return redirect('tasks_index')
 
 
-class TaskListView(AuthRequiredMixin, ListView):
-    model = Task
+class TaskListView(AuthRequiredMixin, FilterView):
+    queryset = Task.objects.select_related('status', 'author', 'executor')
+    filterset_class = TaskFilter
     template_name = 'tasks/index.html'
-
-    def get_queryset(self):
-        return Task.objects.select_related('status', 'author', 'executor')
 
 
 class TaskDetailView(AuthRequiredMixin, DetailView):

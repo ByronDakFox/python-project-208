@@ -19,6 +19,7 @@ from django.urls import include, path
 
 from task_manager.views import IndexView, UserLoginView, UserLogoutView
 
+
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
     path('users/', include('task_manager.users.urls')),

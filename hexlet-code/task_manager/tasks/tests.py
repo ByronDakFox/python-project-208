@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 
+from task_manager.labels.models import Label
 from task_manager.statuses.models import Status
 from task_manager.tasks.models import Task
 
@@ -95,3 +96,45 @@ class TaskCrudTest(TestCase):
         self.client.force_login(self.author)
         self.client.post(reverse('statuses_delete', args=[self.status.pk]))
         self.assertTrue(Status.objects.filter(pk=self.status.pk).exists())
+
+
+class TaskFilterTest(TestCase):
+    def setUp(self):
+        self.ana = User.objects.create_user(
+            username='ana', password=PASSWORD,
+        )
+        self.luis = User.objects.create_user(
+            username='luis', password=PASSWORD,
+        )
+        self.new = Status.objects.create(name='nuevo')
+        self.done = Status.objects.create(name='terminado')
+        self.bug = Label.objects.create(name='bug')
+
+        self.t1 = Task.objects.create(
+            name='T1', status=self.new, author=self.ana,
+            executor=self.luis,
+        )
+        self.t2 = Task.objects.create(
+            name='T2', status=self.done, author=self.luis,
+        )
+        self.t2.labels.add(self.bug)
+        self.client.force_login(self.ana)
+
+    def names(self, **params):
+        response = self.client.get(reverse('tasks_index'), params)
+        return {task.name for task in response.context['task_list']}
+
+    def test_no_filter_shows_all(self):
+        self.assertEqual(self.names(), {'T1', 'T2'})
+
+    def test_filter_by_status(self):
+        self.assertEqual(self.names(status=self.done.pk), {'T2'})
+
+    def test_filter_by_executor(self):
+        self.assertEqual(self.names(executor=self.luis.pk), {'T1'})
+
+    def test_filter_by_label(self):
+        self.assertEqual(self.names(label=self.bug.pk), {'T2'})
+
+    def test_filter_self_tasks(self):
+        self.assertEqual(self.names(self_tasks='on'), {'T1'})

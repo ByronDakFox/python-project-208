@@ -1,10 +1,23 @@
 {% extends "base.html" %}
+{% load django_bootstrap5 %}
 
 {% block content %}
   <h1 class="my-4">Tareas</h1>
   <a class="btn btn-primary mb-3" href="{% url 'tasks_create' %}">
     Crear tarea
   </a>
+
+  <div class="card mb-3">
+    <div class="card-body">
+      <form method="get" class="row row-cols-lg-auto g-3 align-items-end">
+        {% bootstrap_form filter.form layout="inline" %}
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary">Mostrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <table class="table table-striped">
     <thead>
       <tr>
