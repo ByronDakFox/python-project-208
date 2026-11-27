@@ -23,7 +23,7 @@ class TaskAuthorMixin(UserPassesTestMixin):
     def handle_no_permission(self):
         messages.error(
             self.request,
-            'Una tarea solo puede ser eliminada por su autor.',
+            'Solo el autor puede eliminar la tarea',
         )
         return redirect('tasks_index')
 
@@ -57,7 +57,7 @@ class TaskUpdateView(AuthRequiredMixin, SuccessMessageMixin, UpdateView):
     form_class = TaskForm
     template_name = 'tasks/form.html'
     success_url = reverse_lazy('tasks_index')
-    success_message = 'Tarea modificada con éxito'
+    success_message = 'Tarea actualizada con éxito'
     extra_context = {'title': 'Cambiar tarea', 'button_text': 'Editar'}
 
 

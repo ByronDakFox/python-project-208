@@ -29,7 +29,7 @@ class StatusUpdateView(AuthRequiredMixin, SuccessMessageMixin, UpdateView):
     form_class = StatusForm
     template_name = 'statuses/form.html'
     success_url = reverse_lazy('statuses_index')
-    success_message = 'Estado modificado con éxito'
+    success_message = 'Estado actualizado con éxito'
     extra_context = {'title': 'Cambiar estado', 'button_text': 'Editar'}
 
 

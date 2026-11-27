@@ -52,7 +52,7 @@ class UserUpdateView(
     form_class = UserForm
     template_name = 'users/form.html'
     success_url = reverse_lazy('users_index')
-    success_message = 'Usuario modificado con éxito'
+    success_message = 'Usuario actualizado con éxito'
     extra_context = {
         'title': 'Cambiar usuario',
         'button_text': 'Editar',

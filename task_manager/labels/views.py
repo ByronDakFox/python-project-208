@@ -28,7 +28,7 @@ class LabelUpdateView(AuthRequiredMixin, SuccessMessageMixin, UpdateView):
     form_class = LabelForm
     template_name = 'labels/form.html'
     success_url = reverse_lazy('labels_index')
-    success_message = 'Etiqueta modificada con éxito'
+    success_message = 'Etiqueta actualizada con éxito'
     extra_context = {'title': 'Cambiar etiqueta', 'button_text': 'Editar'}
 
 
