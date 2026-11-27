@@ -1,3 +1,6 @@
+setup:
+	uv sync
+
 install:
 	uv sync
 
@@ -5,7 +8,7 @@ dev:
 	uv run python manage.py runserver
 
 collectstatic:
-	uv run python manage.py collectstatic --no--input
+	uv run python manage.py collectstatic --noinput
 
 migrate:
 	uv run python manage.py migrate
