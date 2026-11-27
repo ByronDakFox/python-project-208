@@ -1,5 +1,7 @@
 <div align="center">
 
+[![hexlet-code](https://github.com/ByronDakFox/python-project-208/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/ByronDakFox/python-project-208/actions/workflows/hexlet-check.yml)
+
 # Gestor de tareas
 
 **Aplicación web para organizar el trabajo en equipo: usuarios, tareas, estados y etiquetas, con filtros y seguimiento de errores en producción.**
