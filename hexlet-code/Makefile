@@ -1,5 +1,6 @@
-setup:
-	uv sync
+.PHONY: setup install dev migrate collectstatic test build render-start
+
+setup: install migrate
 
 install:
 	uv sync
